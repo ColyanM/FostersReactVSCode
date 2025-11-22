@@ -4,30 +4,49 @@ using Microsoft.AspNetCore.Mvc;
 [Route("api/[controller]")]
 public class DogsController : ControllerBase
 {
-    // Temporary in-memory list so you can test immediately
-    private static readonly List<Dog> Dogs = new()
-    {
-        new Dog { Id = 1, Name = "Bella", PhotoUrl = "https://placekitten.com/300/300" },
-        new Dog { Id = 2, Name = "Max", PhotoUrl = "https://placekitten.com/301/300" },
-        new Dog { Id = 3, Name = "Luna", PhotoUrl = "https://placekitten.com/300/301" }
-    };
+    private readonly ApplicationDbContext _context;
 
-    // GET /api/dogs
+    public DogsController(ApplicationDbContext context)
+    {
+        _context = context;
+    }
+
+    // GET: api/dogs
     [HttpGet]
     public ActionResult<List<Dog>> GetAllDogs()
     {
-        return Dogs;
+        return _context.Dogs.ToList();
     }
 
-    // GET /api/dogs/1
+    // GET: api/dogs/5
     [HttpGet("{id}")]
     public ActionResult<Dog> GetDog(int id)
     {
-        var dog = Dogs.FirstOrDefault(d => d.Id == id);
+        var dog = _context.Dogs.Find(id);
 
         if (dog == null)
             return NotFound();
 
         return dog;
     }
+
+    // POST: api/dogs
+    [HttpPost]
+    public ActionResult<Dog> CreateDog(CreateDogModel model)
+    {
+        // Convert incoming model → Dog entity
+        var newDog = new Dog
+        {
+            Name = model.Name,
+            PhotoUrl = model.PhotoUrl,
+            Description = model.Description
+        };
+
+        _context.Dogs.Add(newDog);
+        _context.SaveChanges();
+
+        // Return the created dog with its new ID
+        return CreatedAtAction(nameof(GetDog), new { id = newDog.Id }, newDog);
+    }
+
 }
