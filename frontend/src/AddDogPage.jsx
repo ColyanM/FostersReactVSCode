@@ -21,7 +21,7 @@ function AddDogPage() {
     console.log("status:", response.status);
 
     if (response.ok) {
-      navigate("/"); // Go back to homepage
+      navigate("/"); // Navigates back to the homepage
     } else {
       alert("Something went wrong adding the dog.");
     }
