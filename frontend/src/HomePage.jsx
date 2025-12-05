@@ -15,7 +15,7 @@ function HomePage() {
     <div className="page">
 
       <div className="header-bar">
-        <Link to="/about" className="about">+ About</Link>
+        <Link to="/about" className="about">About</Link>
         <h1>Mauis's Memories</h1>
         <Link to="/add-dog" className="add-dog-button">+ Add Dog</Link>
         

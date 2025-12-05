@@ -8,4 +8,7 @@ public class ApplicationDbContext : DbContext
     }
 
     public DbSet<Dog> Dogs { get; set; }
+
+    public DbSet<DogPhoto> DogPhotos { get; set; } = null!;
+
 }

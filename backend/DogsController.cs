@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -11,18 +12,14 @@ public class DogsController : ControllerBase
         _context = context;
     }
 
-    // GET: api/dogs
-    [HttpGet]
-    public ActionResult<List<Dog>> GetAllDogs()
-    {
-        return _context.Dogs.ToList();
-    }
 
-    // GET: api/dogs/5
+    
     [HttpGet("{id}")]
     public ActionResult<Dog> GetDog(int id)
     {
-        var dog = _context.Dogs.Find(id);
+        var dog = _context.Dogs
+            .Include(d => d.Photos)
+            .FirstOrDefault(d => d.Id == id);
 
         if (dog == null)
             return NotFound();
@@ -30,7 +27,15 @@ public class DogsController : ControllerBase
         return dog;
     }
 
-    // POST: api/dogs
+
+    [HttpGet]
+    public ActionResult<IEnumerable<Dog>> GetDogs()
+    {
+        return _context.Dogs.ToList();
+    }
+
+
+
     [HttpPost]
     public ActionResult<Dog> CreateDog(CreateDogModel model)
     {

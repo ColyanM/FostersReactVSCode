@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import "./DogPage.css";
 
 function DogPage() {
   const { id } = useParams();
   const [dog, setDog] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {//takes the dogs ID to pull their information from the db
+  useEffect(() => {
     fetch(`http://localhost:5052/api/dogs/${id}`)
-      .then(response => response.json())
+      .then(res => res.json())
       .then(data => {
         setDog(data);
         setLoading(false);
       })
       .catch(err => {
-        console.error("Error fetching dog:", err);
+        console.error("Error loading dog:", err);
         setLoading(false);
       });
   }, [id]);
@@ -22,49 +23,42 @@ function DogPage() {
   if (loading) return <p>Loading...</p>;
   if (!dog) return <p>Dog not found.</p>;
 
-return (
-  <div
-    style={{
-      maxWidth: "800px",
-      margin: "50px auto",
-      padding: "20px",
-      textAlign: "center",
-      fontFamily: "Arial, sans-serif"
-    }}
-  >
-    <h1 style={{ fontSize: "48px", marginBottom: "30px" }}>{dog.name}</h1>
+  const extraPhotos = dog.photos || [];
 
-    <img
-      src={dog.photoUrl}
-      alt={dog.name}
-      style={{
-        width: "100%",
-        maxWidth: "500px",
-        height: "auto",
-        borderRadius: "12px",
-        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)"
-      }}
-    />
+  return (
+    <div className="dog-page-container">
+      <div className="dog-header">
+        <h1 className="dog-title">{dog.name}</h1>
+        <Link to="/" className="dog-back-link">
+          ← Back to Home
+        </Link>
+      </div>
 
-    <p
-      style={{
-        marginTop: "30px",
-        fontSize: "20px",
-        lineHeight: "1.6",
-        color: "#333"
-      }}
-    >
-      {dog.description}
-    </p>
+      <p className="dog-description">{dog.description}</p>
 
-    <div style={{ marginTop: "40px" }}>
-      <Link to="/" style={{ fontSize: "18px", textDecoration: "none", color: "#4a4aff" }}>
-        ← Back to Home
-      </Link>
+      {extraPhotos.length > 0 && (
+        <>
+          <h2 className="dog-photo-section-title">
+            More photos of {dog.name}
+          </h2>
+
+          <div className="dog-photo-grid">
+            {extraPhotos.map(photo => (
+              <div className="dog-photo-card" key={photo.id}>
+                <img
+                  src={photo.url}
+                  alt={photo.caption || dog.name}
+                />
+                {photo.caption && (
+                  <p className="dog-photo-caption">{photo.caption}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        </>
+      )}
     </div>
-  </div>
-);
-
+  );
 }
 
 export default DogPage;
