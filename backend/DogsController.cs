@@ -34,7 +34,7 @@ public class DogsController : ControllerBase
     [HttpPost]
     public ActionResult<Dog> CreateDog(CreateDogModel model)
     {
-        // Convert incoming model → Dog entity
+        // Convert incoming model into a dog object
         var newDog = new Dog
         {
             Name = model.Name,
@@ -45,7 +45,7 @@ public class DogsController : ControllerBase
         _context.Dogs.Add(newDog);
         _context.SaveChanges();
 
-        // Return the created dog with its new ID
+        // Return the created dog with its new ID as a primary key
         return CreatedAtAction(nameof(GetDog), new { id = newDog.Id }, newDog);
     }
 

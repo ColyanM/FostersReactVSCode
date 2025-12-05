@@ -6,7 +6,7 @@ function DogPage() {
   const [dog, setDog] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  useEffect(() => {//takes the dogs ID to pull their information from the db
     fetch(`http://localhost:5052/api/dogs/${id}`)
       .then(response => response.json())
       .then(data => {
