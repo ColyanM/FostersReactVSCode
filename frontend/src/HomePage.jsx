@@ -15,9 +15,12 @@ function HomePage() {
     <div className="page">
 
       <div className="header-bar">
+        <div className="header-space"> </div>
+        <h1 className = "header-title">Mauis's Memories</h1>
         <Link to="/about" className="about">About</Link>
-        <h1>Mauis's Memories</h1>
-        <Link to="/add-dog" className="add-dog-button">+ Add Dog</Link>
+
+        {/* <Link to="/add-dog" className="add-dog-button">+ Add Dog</Link> */}
+        {/* Disabling for time being */}
         
 
       </div>

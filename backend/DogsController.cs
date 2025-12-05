@@ -35,23 +35,23 @@ public class DogsController : ControllerBase
     }
 
 
+// disabling temporarily
+    // [HttpPost]
+    // public ActionResult<Dog> CreateDog(CreateDogModel model)
+    // {
+    //     // Convert incoming model into a dog object
+    //     var newDog = new Dog
+    //     {
+    //         Name = model.Name,
+    //         PhotoUrl = model.PhotoUrl,
+    //         Description = model.Description
+    //     };
 
-    [HttpPost]
-    public ActionResult<Dog> CreateDog(CreateDogModel model)
-    {
-        // Convert incoming model into a dog object
-        var newDog = new Dog
-        {
-            Name = model.Name,
-            PhotoUrl = model.PhotoUrl,
-            Description = model.Description
-        };
+    //     _context.Dogs.Add(newDog);
+    //     _context.SaveChanges();
 
-        _context.Dogs.Add(newDog);
-        _context.SaveChanges();
-
-        // Return the created dog with its new ID as a primary key
-        return CreatedAtAction(nameof(GetDog), new { id = newDog.Id }, newDog);
-    }
+    //     // Return the created dog with its new ID as a primary key
+    //     return CreatedAtAction(nameof(GetDog), new { id = newDog.Id }, newDog);
+    // }
 
 }

@@ -89,3 +89,16 @@ body {
   align-items: center;
   margin-bottom: "20px";
 }
+
+.header-spacer{
+  width: 80px;
+}
+
+
+/* Maui memories title */
+.header-title {
+  flex: 1;            
+  text-align: center;
+  font-size: 36px;
+  margin: 0;
+}
