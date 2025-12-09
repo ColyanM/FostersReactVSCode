@@ -85,20 +85,30 @@ body {
 
 .header-bar {
   position: sticky;
+  top: 0;
+  z-index: 1000;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: "20px";
+
+  background-color: white;
+  /* important so content doesn't show behind */
+  padding: 10px 20px;
+  border-bottom: 1px solid #ddd;
+
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
 }
 
-.header-spacer{
+.header-spacer {
   width: 80px;
 }
 
 
 /* Maui memories title */
 .header-title {
-  flex: 1;            
+  flex: 1;
   text-align: center;
   font-size: 36px;
   margin: 0;
@@ -106,7 +116,7 @@ body {
 
 
 /* About page header and paragraph */
-.page{
+.page {
   text-align: center;
 }
 
@@ -119,8 +129,10 @@ body {
 
 .back-link,
 .header-space {
-  width: 120px;   /* can adjust this as needed */
-  text-align: right; /* optional: aligns text inside */
+  width: 120px;
+  /* can adjust this as needed */
+  text-align: right;
+  /* optional: aligns text inside */
 }
 
 .back-link {
