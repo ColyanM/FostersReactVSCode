@@ -35,23 +35,45 @@ public class DogsController : ControllerBase
     }
 
 
-// disabling temporarily
-    // [HttpPost]
-    // public ActionResult<Dog> CreateDog(CreateDogModel model)
-    // {
-    //     // Convert incoming model into a dog object
-    //     var newDog = new Dog
-    //     {
-    //         Name = model.Name,
-    //         PhotoUrl = model.PhotoUrl,
-    //         Description = model.Description
-    //     };
+[HttpPost]
+public ActionResult<Dog> CreateDog([FromBody] Dog newDog)
+{
+    _context.Dogs.Add(newDog);
+    _context.SaveChanges();
+    return CreatedAtAction(nameof(GetDog), new { id = newDog.Id }, newDog);
+}
 
-    //     _context.Dogs.Add(newDog);
-    //     _context.SaveChanges();
+[HttpPut("{id}")]
+public IActionResult UpdateDog(int id, [FromBody] Dog updatedDog)
+{
+    var existingDog = _context.Dogs.FirstOrDefault(d => d.Id == id);
+    if (existingDog == null) return NotFound();
 
-    //     // Return the created dog with its new ID as a primary key
-    //     return CreatedAtAction(nameof(GetDog), new { id = newDog.Id }, newDog);
-    // }
+    existingDog.Name = updatedDog.Name;
+    existingDog.PhotoUrl = updatedDog.PhotoUrl;
+    existingDog.Description = updatedDog.Description;
+    existingDog.Gender = updatedDog.Gender;
+
+    _context.SaveChanges();
+    return NoContent();
+}
+
+
+
+[HttpDelete("{id}")]
+public IActionResult DeleteDog(int id)
+{
+    var dog = _context.Dogs.FirstOrDefault(d => d.Id == id);
+    if (dog == null) return NotFound();
+
+    var photos = _context.DogPhotos.Where(p => p.DogId == id);
+    _context.DogPhotos.RemoveRange(photos);
+
+    _context.Dogs.Remove(dog);
+    _context.SaveChanges();
+
+    return Ok(dog);
+}
+
 
 }

@@ -3,6 +3,7 @@ import HomePage from "./HomePage";
 import DogPage from "./DogPage";
 import AddDogPage from "./AddDogPage";
 import About from "./About";
+import Crud from "./Crud";
 
 
 
@@ -13,6 +14,7 @@ function App() {
       <Route path="/dogs/:id" element={<DogPage />} />
       <Route path="/add-dog" element={<AddDogPage />} />
       <Route path="/about" element={<About />} />
+      <Route path="/Crud" element={<Crud />} />
     </Routes>
   );
 }
