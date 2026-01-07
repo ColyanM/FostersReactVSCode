@@ -3,15 +3,16 @@ import { useParams, Link } from "react-router-dom";
 import "./DogPage.css";
 
 function DogPage() {
+  //takes the ID from the URL
   const { id } = useParams();
   const [dog, setDog] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:5052/api/dogs/${id}`)
+    fetch(`http://localhost:5052/api/dogs/${id}`) //calls API off of ID
       .then(res => res.json())
       .then(data => {
-        setDog(data);
+        setDog(data); //stores the dog object
         setLoading(false);
       })
       .catch(err => {

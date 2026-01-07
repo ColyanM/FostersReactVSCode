@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react"; //hook for state and lifecycle
+import { Link } from "react-router-dom"; //navigates without full page reload
 
 function HomePage() {
+  //list of dogs from the backend
   const [dogs, setDogs] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5052/api/dogs")
+    fetch("http://localhost:5052/api/dogs") 
       .then(response => response.json())
       .then(data => setDogs(data))
       .catch(err => console.error("Error fetching dogs:", err));

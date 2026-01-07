@@ -13,7 +13,7 @@ public class DogsController : ControllerBase
     }
 
 
-    
+    //returns single dog based on their unique id
     [HttpGet("{id}")]
     public ActionResult<Dog> GetDog(int id)
     {
@@ -27,14 +27,14 @@ public class DogsController : ControllerBase
         return dog;
     }
 
-
+//returns all dogs
     [HttpGet]
     public ActionResult<IEnumerable<Dog>> GetDogs()
     {
         return _context.Dogs.ToList();
     }
 
-
+//updates an existing dog that is selected
 [HttpPost]
 public ActionResult<Dog> CreateDog([FromBody] Dog newDog)
 {
@@ -43,6 +43,7 @@ public ActionResult<Dog> CreateDog([FromBody] Dog newDog)
     return CreatedAtAction(nameof(GetDog), new { id = newDog.Id }, newDog);
 }
 
+//deletes an existing dog once selected
 [HttpPut("{id}")]
 public IActionResult UpdateDog(int id, [FromBody] Dog updatedDog)
 {

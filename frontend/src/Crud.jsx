@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 const API_BASE = "http://localhost:5052/api/dogs";
 
 function Crud() {
+  //dropdown of dogs
   const [dogs, setDogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
@@ -19,7 +20,7 @@ function Crud() {
   const [updateGender, setUpdateGender] = useState("");
 
   const [selectedDeleteId, setSelectedDeleteId] = useState("");
-
+//load dogs from API (refreshes after changes)
   function loadDogs() {
     setLoading(true);
     fetch(API_BASE)
